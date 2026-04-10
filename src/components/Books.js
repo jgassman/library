@@ -137,20 +137,27 @@ const Books = () => {
   const [showReadingChallenge, setShowReadingChallenge] = React.useState(false);
   const [showUnread, setShowUnread] = React.useState(false);
 
-  const fetchBookList = async () => {
-    let response = await axios.get('/api/books/');
-    let json = await response.data;;
-    return { success: true, data: json};
+  const fetchBookList = async (page) => {
+    let response = await axios.get(`/api/books/?page=${page}`);
+    let json = await response.data;
+    var nextPage = json.next ? json.next.split('=').at(-1) : null;
+    return { success: true, data: json.results, next: nextPage};
   }
 
   React.useEffect(() => {
     (async () => {
-      let bookResponse = await fetchBookList();
-      if (bookResponse.success) {
-        setBooks(sortBooks(bookResponse.data));
-        setBooksLoaded(true);
-        setFilteredBooks(sortBooks(bookResponse.data))
+      var nextPage = 1;
+      var bookList = [];
+      while (nextPage) {
+        let bookResponse = await fetchBookList(nextPage);
+        if (bookResponse.success) {
+          bookList = [...bookList, ...bookResponse.data]
+          nextPage = bookResponse.next;
+        }
       }
+      setBooks(bookList);
+      setFilteredBooks(bookList);
+      setBooksLoaded(true);
     })()
   }, []);
 

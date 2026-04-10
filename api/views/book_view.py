@@ -24,5 +24,5 @@ class BookViewSet(viewsets.ModelViewSet):
 
     filterset_class = BookFilter
     permission_classes = [CanPerformWriteAction]
-    queryset = Book.objects.all()
+    queryset = Book.objects.all().order_by('title')
     serializer_class = BookSerializer

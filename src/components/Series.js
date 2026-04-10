@@ -51,7 +51,7 @@ const SeriesDetail = ({ series }) => {
         <Card className={classes.bookBox}>
           <Grid container spacing={3}>
             <Grid item xs={3} className={classes.imgContainer}>
-              <img src={series.books[0].cover_url || defaultCover} className={classes.bookCover} alt="" />
+              <img src={series.books[0] ? series.books[0].cover_url : null} className={classes.bookCover} alt="" />
             </Grid>
             <Grid item container xs={9}>
               <Grid item xs={12}>
@@ -83,20 +83,28 @@ const Series = () => {
   const [seriesLoaded, setSeriesLoaded] = React.useState(false);
   const [filteredSeries, setFilteredSeries] = React.useState([]);
 
-  const fetchSeriesList = async () => {
-    let response = await axios.get('/api/series/');
-    let json = await response.data;;
-    return { success: true, data: json};
+  const fetchSeriesList = async (page) => {
+    let response = await axios.get(`/api/series/?page=${page}`);
+    let json = await response.data;
+    var nextPage = json.next ? json.next.split('=').at(-1) : null;
+    return { success: true, data: json.results, next: nextPage};
   }
 
   React.useEffect(() => {
     (async () => {
-      let seriesResponse = await fetchSeriesList();
-      if (seriesResponse.success) {
-        setSeries(sortSeries(seriesResponse.data));
-        setSeriesLoaded(true);
-        setFilteredSeries(sortSeries(seriesResponse.data));
+      var nextPage = 1;
+      var seriesList = [];
+      while (nextPage) {
+        let seriesResponse = await fetchSeriesList(nextPage);
+        if (seriesResponse.success) {
+          seriesList = [...seriesList, ...seriesResponse.data];
+          nextPage = seriesResponse.next;
+        }
       }
+      console.log(seriesList)
+      setSeries(seriesList)
+      setSeriesLoaded(true);
+      setFilteredSeries(seriesList);
     })()
   }, []);
 

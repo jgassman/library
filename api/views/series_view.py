@@ -8,5 +8,5 @@ from api.serializers import SeriesSerializer
 class SeriesViewSet(viewsets.ModelViewSet):
 
     permission_classes = [CanPerformWriteAction]
-    queryset = Series.objects.all()
+    queryset = Series.objects.all().order_by('name')
     serializer_class = SeriesSerializer
