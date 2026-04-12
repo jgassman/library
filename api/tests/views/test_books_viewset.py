@@ -50,137 +50,146 @@ class BookViewSetTests(TestCase):
     def test_can_list_all_books(self):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
-        expected = [
-            {
-                'id': self.book_one.pk,
-                'age_group': self.book_one.age_group,
-                'audiobook': False,
-                'authors': [
-                    {
-                        'id': self.gaiman.pk,
-                        'first_name': self.gaiman.first_name,
-                        'last_name': self.gaiman.last_name,
+        expected = {
+            'count': 3,
+            'next': None,
+            'previous': None,
+            'results': [
+                {
+                    'id': self.book_one.pk,
+                    'age_group': self.book_one.age_group,
+                    'audiobook': False,
+                    'authors': [
+                        {
+                            'id': self.gaiman.pk,
+                            'first_name': self.gaiman.first_name,
+                            'last_name': self.gaiman.last_name,
+                        },
+                        {
+                            'id': self.pratchett.pk,
+                            'first_name': self.pratchett.first_name,
+                            'last_name': self.pratchett.last_name,
+                        },
+                    ],
+                    'cover_url': self.book_one.cover_url,
+                    'display_title': self.book_one.display_title,
+                    'is_reading_challenge_eligible': self.book_one.is_reading_challenge_eligible,
+                    'read': self.book_one.read,
+                    'series': None,
+                    'series_num': None,
+                    'subgenre': {
+                        'id': self.urban_fantasy.id,
+                        'exclude_from_challenge': False,
+                        'genre': {
+                            'id': self.fantasy.id,
+                            'name': self.fantasy.name,
+                        },
+                        'name': self.urban_fantasy.name,
                     },
-                    {
-                        'id': self.pratchett.pk,
-                        'first_name': self.pratchett.first_name,
-                        'last_name': self.pratchett.last_name,
-                    },
-                ],
-                'cover_url': self.book_one.cover_url,
-                'display_title': self.book_one.display_title,
-                'is_reading_challenge_eligible': self.book_one.is_reading_challenge_eligible,
-                'read': self.book_one.read,
-                'series': None,
-                'series_num': None,
-                'subgenre': {
-                    'id': self.urban_fantasy.id,
-                    'exclude_from_challenge': False,
-                    'genre': {
-                        'id': self.fantasy.id,
-                        'name': self.fantasy.name,
-                    },
-                    'name': self.urban_fantasy.name,
+                    'tags': [],
+                    'title': self.book_one.title,
+                    'year': self.book_one.year,
                 },
-                'tags': [],
-                'title': self.book_one.title,
-                'year': self.book_one.year,
-            },
-            {
-                'id': self.book_two.pk,
-                'age_group': self.book_two.age_group,
-                'audiobook': False,
-                'authors': [
-                    {
-                        'id': self.tolkien.pk,
-                        'first_name': self.tolkien.first_name,
-                        'last_name': self.tolkien.last_name,
+                {
+                    'id': self.book_two.pk,
+                    'age_group': self.book_two.age_group,
+                    'audiobook': False,
+                    'authors': [
+                        {
+                            'id': self.tolkien.pk,
+                            'first_name': self.tolkien.first_name,
+                            'last_name': self.tolkien.last_name,
+                        },
+                    ],
+                    'cover_url': self.book_two.cover_url,
+                    'display_title': self.book_two.display_title,
+                    'is_reading_challenge_eligible': self.book_two.is_reading_challenge_eligible,
+                    'read': self.book_two.read,
+                    'series': {
+                        'id': self.book_two.series.pk,
+                        'name': self.book_two.series.name,
                     },
-                ],
-                'cover_url': self.book_two.cover_url,
-                'display_title': self.book_two.display_title,
-                'is_reading_challenge_eligible': self.book_two.is_reading_challenge_eligible,
-                'read': self.book_two.read,
-                'series': {
-                    'id': self.book_two.series.pk,
-                    'name': self.book_two.series.name,
+                    'series_num': self.book_two.series_num,
+                    'subgenre': {
+                        'id': self.high_fantasy.id,
+                        'exclude_from_challenge': False,
+                        'genre': {
+                            'id': self.fantasy.id,
+                            'name': self.fantasy.name,
+                        },
+                        'name': self.high_fantasy.name,
+                    },
+                    'tags': [
+                        {
+                            'id': self.favorites.pk,
+                            'name': self.favorites.name,
+                        },
+                    ],
+                    'title': self.book_two.title,
+                    'year': self.book_two.year,
                 },
-                'series_num': self.book_two.series_num,
-                'subgenre': {
-                    'id': self.high_fantasy.id,
-                    'exclude_from_challenge': False,
-                    'genre': {
-                        'id': self.fantasy.id,
-                        'name': self.fantasy.name,
+                {
+                    'id': self.book_three.pk,
+                    'age_group': self.book_three.age_group,
+                    'audiobook': False,
+                    'authors': [
+                        {
+                            'id': self.stoker.pk,
+                            'first_name': self.stoker.first_name,
+                            'last_name': self.stoker.last_name,
+                        },
+                    ],
+                    'cover_url': self.book_three.cover_url,
+                    'display_title': self.book_three.display_title,
+                    'is_reading_challenge_eligible': self.book_three.is_reading_challenge_eligible,
+                    'read': self.book_three.read,
+                    'series': None,
+                    'series_num': None,
+                    'subgenre': {
+                        'id': self.paranormal.id,
+                        'exclude_from_challenge': False,
+                        'genre': {
+                            'id': self.horror.id,
+                            'name': self.horror.name,
+                        },
+                        'name': self.paranormal.name,
                     },
-                    'name': self.high_fantasy.name,
+                    'title': self.book_three.title,
+                    'tags': [
+                        {
+                            'id': self.favorites.pk,
+                            'name': self.favorites.name,
+                        },
+                    ],
+                    'year': self.book_three.year,
                 },
-                'tags': [
-                    {
-                        'id': self.favorites.pk,
-                        'name': self.favorites.name,
-                    },
-                ],
-                'title': self.book_two.title,
-                'year': self.book_two.year,
-            },
-            {
-                'id': self.book_three.pk,
-                'age_group': self.book_three.age_group,
-                'audiobook': False,
-                'authors': [
-                    {
-                        'id': self.stoker.pk,
-                        'first_name': self.stoker.first_name,
-                        'last_name': self.stoker.last_name,
-                    },
-                ],
-                'cover_url': self.book_three.cover_url,
-                'display_title': self.book_three.display_title,
-                'is_reading_challenge_eligible': self.book_three.is_reading_challenge_eligible,
-                'read': self.book_three.read,
-                'series': None,
-                'series_num': None,
-                'subgenre': {
-                    'id': self.paranormal.id,
-                    'exclude_from_challenge': False,
-                    'genre': {
-                        'id': self.horror.id,
-                        'name': self.horror.name,
-                    },
-                    'name': self.paranormal.name,
-                },
-                'title': self.book_three.title,
-                'tags': [
-                    {
-                        'id': self.favorites.pk,
-                        'name': self.favorites.name,
-                    },
-                ],
-                'year': self.book_three.year,
-            },
-        ]
+            ]
+        }
         self.assertCountEqual(expected, response.json())
 
     def test_can_filter_books_by_author(self):
         response = self.client.get(self.url, data={'author_id': self.gaiman.pk})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]['id'], self.book_one.pk)
+        self.assertEqual(response.json()['count'], 1)
+        self.assertEqual(len(response.json()['results']), 1)
+        self.assertEqual(response.json()['results'][0]['id'], self.book_one.pk)
         response = self.client.get(self.url, data={'author_id': self.stoker.pk})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]['id'], self.book_three.pk)
+        self.assertEqual(response.json()['count'], 1)
+        self.assertEqual(len(response.json()['results']), 1)
+        self.assertEqual(response.json()['results'][0]['id'], self.book_three.pk)
 
     def test_can_filter_books_by_genre(self):
         response = self.client.get(self.url, data={'genre': 'Fantasy'})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 2)
-        self.assertCountEqual([b['id'] for b in response.json()], [self.book_one.pk, self.book_two.pk])
+        self.assertEqual(response.json()['count'], 2)
+        self.assertEqual(len(response.json()['results']), 2)
+        self.assertCountEqual([b['id'] for b in response.json()['results']], [self.book_one.pk, self.book_two.pk])
         response = self.client.get(self.url, data={'genre': 'Horror'})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]['id'], self.book_three.pk)
+        self.assertEqual(response.json()['count'], 1)
+        self.assertEqual(len(response.json()['results']), 1)
+        self.assertEqual(response.json()['results'][0]['id'], self.book_three.pk)
 
     def test_can_filter_books_by_age_group(self):
         self.book_two.age_group = 'young-adult'
@@ -188,28 +197,33 @@ class BookViewSetTests(TestCase):
 
         response = self.client.get(self.url, data={'age_group': 'adult'})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 2)
-        self.assertCountEqual([b['id'] for b in response.json()], [self.book_one.pk, self.book_three.pk])
+        self.assertEqual(response.json()['count'], 2)
+        self.assertEqual(len(response.json()['results']), 2)
+        self.assertCountEqual([b['id'] for b in response.json()['results']], [self.book_one.pk, self.book_three.pk])
         response = self.client.get(self.url, data={'age_group': 'young-adult'})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]['id'], self.book_two.pk)
+        self.assertEqual(response.json()['count'], 1)
+        self.assertEqual(len(response.json()['results']), 1)
+        self.assertEqual(response.json()['results'][0]['id'], self.book_two.pk)
 
     def test_can_filter_books_by_read(self):
         response = self.client.get(self.url, data={'read': False})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 2)
-        self.assertCountEqual([b['id'] for b in response.json()], [self.book_two.pk, self.book_three.pk])
+        self.assertEqual(response.json()['count'], 2)
+        self.assertEqual(len(response.json()['results']), 2)
+        self.assertCountEqual([b['id'] for b in response.json()['results']], [self.book_two.pk, self.book_three.pk])
         response = self.client.get(self.url, data={'read': True})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]['id'], self.book_one.pk)
+        self.assertEqual(response.json()['count'], 1)
+        self.assertEqual(len(response.json()['results']), 1)
+        self.assertEqual(response.json()['results'][0]['id'], self.book_one.pk)
 
     def test_can_filter_books_by_series_id(self):
         response = self.client.get(self.url, data={'series_id': self.series.pk})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]['id'], self.book_two.pk)
+        self.assertEqual(response.json()['count'], 1)
+        self.assertEqual(len(response.json()['results']), 1)
+        self.assertEqual(response.json()['results'][0]['id'], self.book_two.pk)
 
     def test_can_get_a_specific_book(self):
         response = self.client.get(f'{self.url}{self.book_one.pk}/')

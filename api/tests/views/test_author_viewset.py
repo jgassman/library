@@ -15,36 +15,46 @@ class AuthorViewSetTests(TestCase):
     def test_can_list_all_authors(self):
         author = Author.objects.create(first_name='Neil', last_name='Gaiman')
         response = self.client.get(self.url)
-        expected = [
-            {
-                'id': self.author.pk,
-                'first_name': self.author.first_name,
-                'last_name': self.author.last_name,
-            },
-            {
-                'id': author.pk,
-                'first_name': author.first_name,
-                'last_name': author.last_name,
-            },
-        ]
+        expected = {
+            'count': 2,
+            'next': None,
+            'previous': None,
+            'results': [
+                {
+                    'id': self.author.pk,
+                    'first_name': self.author.first_name,
+                    'last_name': self.author.last_name,
+                },
+                {
+                    'id': author.pk,
+                    'first_name': author.first_name,
+                    'last_name': author.last_name,
+                },
+            ]
+        }
         self.assertCountEqual(expected, response.json())
 
     def test_can_list_all_authors_when_not_logged_in(self):
         author = Author.objects.create(first_name='Neil', last_name='Gaiman')
         self.client.logout()
         response = self.client.get(self.url)
-        expected = [
-            {
-                'id': self.author.pk,
-                'first_name': self.author.first_name,
-                'last_name': self.author.last_name,
-            },
-            {
-                'id': author.pk,
-                'first_name': author.first_name,
-                'last_name': author.last_name,
-            },
-        ]
+        expected = {
+            'count': 2,
+            'next': None,
+            'previous': None,
+            'results': [
+                {
+                    'id': self.author.pk,
+                    'first_name': self.author.first_name,
+                    'last_name': self.author.last_name,
+                },
+                {
+                    'id': author.pk,
+                    'first_name': author.first_name,
+                    'last_name': author.last_name,
+                },
+            ]
+        }
         self.assertCountEqual(expected, response.json())
 
     def test_can_get_an_author(self):
