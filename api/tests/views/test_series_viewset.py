@@ -27,39 +27,44 @@ class SeriesViewSetTests(TestCase):
         series = Series.objects.create(name='Fruits Basket')
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
-        expected = [
-            {
-                'id': self.series.pk,
-                'authors': [
-                    {
-                        'id': self.tolkien.pk,
-                        'first_name': self.tolkien.first_name,
-                        'last_name': self.tolkien.last_name,
-                    },
-                ],
-                'books': [
-                    {
-                        'id': self.two_towers.pk,
-                        'age_group': self.two_towers.age_group,
-                        'audiobook': False,
-                        'cover_url': self.two_towers.cover_url,
-                        'display_title': self.two_towers.display_title,
-                        'is_reading_challenge_eligible': self.two_towers.is_reading_challenge_eligible,
-                        'read': self.two_towers.read,
-                        'series_num': self.two_towers.series_num,
-                        'title': self.two_towers.title,
-                        'year': self.two_towers.year,
-                    },
-                ],
-                'name': self.series.name,
-            },
-            {
-                'id': series.pk,
-                'authors': [],
-                'books': [],
-                'name': series.name,
-            },
-        ]
+        expected = {
+            'count': 3,
+            'next': None,
+            'previous': None,
+            'results': [
+                {
+                    'id': self.series.pk,
+                    'authors': [
+                        {
+                            'id': self.tolkien.pk,
+                            'first_name': self.tolkien.first_name,
+                            'last_name': self.tolkien.last_name,
+                        },
+                    ],
+                    'books': [
+                        {
+                            'id': self.two_towers.pk,
+                            'age_group': self.two_towers.age_group,
+                            'audiobook': False,
+                            'cover_url': self.two_towers.cover_url,
+                            'display_title': self.two_towers.display_title,
+                            'is_reading_challenge_eligible': self.two_towers.is_reading_challenge_eligible,
+                            'read': self.two_towers.read,
+                            'series_num': self.two_towers.series_num,
+                            'title': self.two_towers.title,
+                            'year': self.two_towers.year,
+                        },
+                    ],
+                    'name': self.series.name,
+                },
+                {
+                    'id': series.pk,
+                    'authors': [],
+                    'books': [],
+                    'name': series.name,
+                },
+            ]
+        }
         self.assertCountEqual(expected, response.json())
 
     def test_can_list_all_series_if_not_logged_in(self):
@@ -67,39 +72,44 @@ class SeriesViewSetTests(TestCase):
         self.client.logout()
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
-        expected = [
-            {
-                'id': self.series.pk,
-                'authors': [
-                    {
-                        'id': self.tolkien.pk,
-                        'first_name': self.tolkien.first_name,
-                        'last_name': self.tolkien.last_name,
-                    },
-                ],
-                'books': [
-                    {
-                        'id': self.two_towers.pk,
-                        'age_group': self.two_towers.age_group,
-                        'audiobook': False,
-                        'cover_url': self.two_towers.cover_url,
-                        'display_title': self.two_towers.display_title,
-                        'is_reading_challenge_eligible': self.two_towers.is_reading_challenge_eligible,
-                        'read': self.two_towers.read,
-                        'series_num': self.two_towers.series_num,
-                        'title': self.two_towers.title,
-                        'year': self.two_towers.year,
-                    },
-                ],
-                'name': self.series.name,
-            },
-            {
-                'id': series.pk,
-                'authors': [],
-                'books': [],
-                'name': series.name,
-            },
-        ]
+        expected = {
+            'count': 3,
+            'next': None,
+            'previous': None,
+            'results': [
+                {
+                    'id': self.series.pk,
+                    'authors': [
+                        {
+                            'id': self.tolkien.pk,
+                            'first_name': self.tolkien.first_name,
+                            'last_name': self.tolkien.last_name,
+                        },
+                    ],
+                    'books': [
+                        {
+                            'id': self.two_towers.pk,
+                            'age_group': self.two_towers.age_group,
+                            'audiobook': False,
+                            'cover_url': self.two_towers.cover_url,
+                            'display_title': self.two_towers.display_title,
+                            'is_reading_challenge_eligible': self.two_towers.is_reading_challenge_eligible,
+                            'read': self.two_towers.read,
+                            'series_num': self.two_towers.series_num,
+                            'title': self.two_towers.title,
+                            'year': self.two_towers.year,
+                        },
+                    ],
+                    'name': self.series.name,
+                },
+                {
+                    'id': series.pk,
+                    'authors': [],
+                    'books': [],
+                    'name': series.name,
+                },
+            ]
+        }
         self.assertCountEqual(expected, response.json())
 
     def test_can_get_a_specific_series(self):
