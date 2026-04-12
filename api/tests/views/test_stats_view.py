@@ -114,7 +114,7 @@ class SeriesViewSetTests(TestCase):
         }
         self.assertEqual(expected, response.json()['books_by_read_status'])
 
-    def test_includes_middle_grade_and_if_standalone_and_read(self):
+    def test_includes_middle_grade_if_standalone_and_read(self):
         models.Book.objects.create(
             title='The Wind Singer',
             year=2000,
