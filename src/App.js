@@ -6,8 +6,6 @@ import { HashRouter, Route } from 'react-router-dom';
 import { AppHeader, AppFooter } from './components/AppHeader';
 import Books from './components/Books';
 import BookDetail from './components/BookDetail';
-import Authors from './components/Authors';
-import AuthorDetail from './components/AuthorDetail';
 import Series from './components/Series';
 import SeriesDetail from './components/SeriesDetail';
 import Stats from './components/Stats';
@@ -38,12 +36,6 @@ function App() {
           path="/books/:book_id"
           exact
           render={(props) => <BookDetail {...props} />}
-        />
-        <Route path="/authors" exact render={() => <Authors />} />
-        <Route
-          path="/authors/:author_id"
-          exact
-          render={(props) => <AuthorDetail {...props} />}
         />
         <Route path="/series" exact render={() => <Series />} />
         <Route

@@ -42,7 +42,6 @@ const useStyles = makeStyles(() => ({
 const ITEM_HEIGHT = 48;
 
 const options = [
-  // {label: 'Authors', url: '/#/authors/'},
   {label: 'Books', url: '/#/books/'},
   {label: 'Series', url: '/#/series/'},
   {label: 'Statistics', url: '/#/stats/'},
@@ -95,7 +94,7 @@ export const AppHeader = () => {
             }}
           >
             {options.map((option) => (
-              <MenuItem key={option.label} selected={option.label === 'Authors'} onClick={handleClose}>
+              <MenuItem key={option.label} selected={option.label === 'Books'} onClick={handleClose}>
               <div onClick={handlePageChange(option.url)}>
                 {option.label}
               </div>
